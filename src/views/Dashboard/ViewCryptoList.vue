@@ -106,21 +106,23 @@ onMounted(async () => {
           <BaseTitle :text="title" class="-mt-3 mr-4 a-05 fadeInLeft" />
         </div>
         <div class="flex col-span-3 items-center justify-center md:justify-start mb-2 md:mb-0">
-          <BaseInputFilter
-            ref="refInputFilter"
-            index="name"
-            :search-indexes="['name', 'symbol']"
-            :controller="dynamicController"
-            class="rounded-l-full h-10 shadow p-2 outline-0 a-05 d-500 fadeInDown"
-            :placeholder="print('search_a_name') + '...'"
-          />
-          <BaseSelectFilter
-            index="currency"
-            :default="currencyActive"
-            :options="currenciesListOptions"
-            @onChange="setCurrencyActive"
-            class="rounded-r-full h-10 shadow uppercase font-bold pl-3 a-08 d-500 fadeInDown"
-          />
+          <div class="h-10 shadow a-05 d-500 fadeInDown">
+            <BaseInputFilter
+              ref="refInputFilter"
+              index="name"
+              :search-indexes="['name', 'symbol']"
+              :controller="dynamicController"
+              class="rounded-l-full h-10 p-2 outline-0 a-05 d-500"
+              :placeholder="print('search_a_name') + '...'"
+            />
+            <BaseSelectFilter
+              index="currency"
+              :default="currencyActive"
+              :options="currenciesListOptions"
+              @onChange="setCurrencyActive"
+              class="rounded-r-full h-10 uppercase font-bold pl-3 a-08 d-500"
+            />
+          </div>
         </div>
       </div>
       <div class="flex flex-1 mt-1">
