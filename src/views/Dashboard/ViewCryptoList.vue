@@ -3,7 +3,7 @@ import {
   ref,
   computed,
   inject,
-  DefineComponent,
+  Component,
   onMounted,
   watch,
   Ref,
@@ -34,7 +34,7 @@ const App = inject<IAppProvider>("App");
 const props = defineProps<{
   title: string;
   cryptoList: Map<string, TCryptoData>;
-  component: DefineComponent<any, any, any>;
+  component: Component;
 }>();
 
 const { t: print } = useI18n();

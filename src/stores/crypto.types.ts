@@ -24,18 +24,19 @@ export type TEntryCryptoData = {
 }
 
 export type TCryptoData = {
-  id: string
-  name: string
-  symbol: string
-  image?: string
+  [key: string]: any,
+  id: string,
+  name: string,
+  symbol: string,
+  image?: string,
   category?: string,
-  sparkline_in_7d?: number[]
+  sparkline_in_7d?: number[],
   pricesByCurrencies: {
     [key: string]: {
-      current_price: number
+      current_price: number,
       market_cap: number,
       total_volume: number,
-      price_change_24h: number,
+      price_change_24h: number
     }
   }
 }

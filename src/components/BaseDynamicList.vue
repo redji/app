@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, DefineComponent, defineExpose, VNodeRef } from "vue";
-import { useInfiniteScroll } from "@vueuse/core";
-import { Spinner } from "@/app.organizer";
-import { TDynamicSort } from "./BaseDynamicSorts.vue";
+import { ref, onMounted, computed, watch, Component, defineExpose, VNodeRef } from "vue"
+import { useInfiniteScroll } from "@vueuse/core"
+import { Spinner } from "@/app.organizer"
+import { TDynamicSort } from "./BaseDynamicSorts.vue"
 import { useScroll } from '@vueuse/core'
-import { TCryptoData } from "@/stores/crypto.types";
+import { TCryptoData } from "@/stores/crypto.types"
 
-
-export type TParamsUpdateFilters = {
+type TParamsUpdateFilters = {
   ref: string,
   indexes: string[],
   values: string[],
@@ -23,7 +22,7 @@ type TDynamicsFilters = {
 const props = defineProps<{
   items: Map<string, any>;
   itemsByBloc: number;
-  component: DefineComponent<any, any, any>;
+  component: Component;
   componentKey: string;
   watcher: any;
   noResultText: string
