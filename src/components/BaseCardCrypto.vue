@@ -1,86 +1,85 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { storeToRefs } from "pinia";
-import { TCryptoData } from "@/stores/crypto.types";
-import { useCryptoStore } from "@/stores/crypto";
+import { computed, ref } from 'vue'
+import { TCryptoData } from '@/stores/crypto.types'
+import { useCrypto } from '@/composables/useCrypto'
 import {
   BaseCryptoChart,
   BaseSelectFilter,
   FavoriteStar,
-  Spinner,
-} from "@/app.organizer";
-import useCurrencySymbol from "@/composables/useCurrencySymbol";
-import { useI18n } from "vue-i18n";
+  Spinner
+} from '@/app.organizer'
+import useCurrencySymbol from '@/composables/useCurrencySymbol'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
     itemId: string,
-}>();
+}>()
 
-const cryptoStore = useCryptoStore();
+const cryptoStore = useCrypto()
 
-const { currencyActive, cryptoFavorites, currenciesList,  cryptoList } =
-  storeToRefs(cryptoStore);
+const { currencyActive, cryptoFavorites, currenciesList, cryptoList } = cryptoStore
 
-const { setCurrencyActive, addFavorite, removeFavorite } = cryptoStore;
+const { setCurrencyActive, addFavorite, removeFavorite } = cryptoStore
 
-const crypto = ref(cryptoList.value.get(props.itemId) as TCryptoData)
-const currencySymbol = computed(() => useCurrencySymbol(currencyActive.value));
-const chartElement = ref();
+const crypto = ref(cryptoList.get(props.itemId) as TCryptoData)
+const currencySymbol = computed(() => useCurrencySymbol(currencyActive))
+const chartElement = ref()
 
-const { t: print } = useI18n();
+const { t: print } = useI18n()
 
 const isInFavorites = computed(() => {
-        if (crypto.value)
-            !!cryptoFavorites.value.get(crypto.value.id)
-        return false;
+  if (crypto.value) { !!cryptoFavorites.get(crypto.value.id) }
+  return false
 })
 
-
 const currenciesListOptions = computed(() => {
-  return currenciesList.value.map((c) => {
+  return currenciesList.map((c) => {
     return {
       value: c,
-      label: c,
-    };
-  });
-});
+      label: c
+    }
+  })
+})
 
 const toggleFavorite = () => {
   if (isInFavorites.value && crypto.value) {
-    removeFavorite(crypto.value);
-  } else if (crypto.value) addFavorite(crypto.value);
-};
+    removeFavorite(crypto.value)
+  } else if (crypto.value) addFavorite(crypto.value)
+}
 
 const calculatedSparkline = computed(() => {
-  if (!crypto?.value?.sparkline_in_7d?.length) return false;
-  const toReduce = crypto.value.sparkline_in_7d;
+  if (!crypto?.value?.sparkline_in_7d?.length) return false
+  const toReduce = crypto.value.sparkline_in_7d
   const reduced = toReduce.reduce((acc, val, index) => {
-    if (index && index % 23 === 0) acc.push(val);
-    return acc;
-  }, new Array<number>());
+    if (index && index % 23 === 0) acc.push(val)
+    return acc
+  }, [])
 
-  return reduced.length > 3 ? reduced : false;
-});
+  return reduced.length > 3 ? reduced : false
+})
 
 const orderedSparkLabels = computed(() => {
-  if (!calculatedSparkline.value) return [];
+  if (!calculatedSparkline.value) return []
   return calculatedSparkline.value.map((_, index: number) => {
     if (calculatedSparkline.value) {
-      return "J-" + (index - calculatedSparkline.value.length);
-    } else return "";
-  });
-});
+      return 'J-' + (index - calculatedSparkline.value.length)
+    } else return ''
+  })
+})
 </script>
 
 <template>
-  <div v-if="crypto" class="relative mt-20 lg:mt-20 rounded w-full lg:w-5/6 max-w-screen-xl  align-self mx-auto">
+  <div
+    v-if="crypto"
+    class="relative mt-20 lg:mt-20 rounded w-full lg:w-5/6 max-w-screen-xl  align-self mx-auto"
+  >
     <div class="flex grid grid-cols-1 lg:grid-cols-10 w-full">
       <div class="image flex col-span-2 pl-2 pr-2 items-center a-1 justify-center fadeInLeft">
         <img
           v-if="crypto.image"
           v-lazy="crypto.image"
           class="w-150 h-150 border-round rounded-full"
-        />
+        >
         <Spinner
           v-else
           color="#DDD"
@@ -114,7 +113,10 @@ const orderedSparkLabels = computed(() => {
               {{ crypto.pricesByCurrencies[currencyActive].current_price }}
               {{ currencySymbol }}
             </template>
-            <span v-else class="text-sm border-1 text-gray-300">N/A</span>
+            <span
+              v-else
+              class="text-sm border-1 text-gray-300"
+            >N/A</span>
           </div>
           <div class="inline text-center lg:text-left">
             <span class="text-sm font-bold">{{ print("market_cap") }}</span> :
@@ -124,7 +126,10 @@ const orderedSparkLabels = computed(() => {
               {{ crypto.pricesByCurrencies[currencyActive].market_cap }}
               {{ currencySymbol }}
             </template>
-            <span v-else class="text-sm border-1 text-gray-300">N/A</span>
+            <span
+              v-else
+              class="text-sm border-1 text-gray-300"
+            >N/A</span>
           </div>
           <div class="inline text-center lg:text-left">
             <span class="text-sm font-bold">{{ print("total_volume") }}</span> :
@@ -134,7 +139,10 @@ const orderedSparkLabels = computed(() => {
               {{ crypto.pricesByCurrencies[currencyActive].total_volume }}
               {{ currencySymbol }}
             </template>
-            <span v-else class="text-sm border-1 text-gray-300">N/A</span>
+            <span
+              v-else
+              class="text-sm border-1 text-gray-300"
+            >N/A</span>
           </div>
         </div>
         <div class="flex items-center justify-center lg:justify-start">
@@ -142,28 +150,34 @@ const orderedSparkLabels = computed(() => {
             index="currency"
             :default="currencyActive"
             :options="currenciesListOptions"
-            @onChange="setCurrencyActive"
             class="lg:rounded-r-full rounded-full h-10 mt-2 mb-2 lg:mt-0 lg:mb-0 shadow uppercase font-bold pl-3 a-08 d-500 fadeInDown"
+            @on-change="setCurrencyActive"
           />
         </div>
         <div
           class="flex col-span-10 lg:col-span-2 items-center justify-center lg:justify-end pb-4 lg:pr-3 lg:pr-10"
         >
-          <div class="flex items-center" @click.prevent.stop="toggleFavorite">
-            <FavoriteStar :active="isInFavorites" class="pr" />
+          <div
+            class="flex items-center"
+            @click.prevent.stop="toggleFavorite"
+          >
+            <FavoriteStar
+              :active="isInFavorites"
+              class="pr"
+            />
             <span
               class="pl-1 text-xs cursor-pointer"
               :class="[(isInFavorites ? 'text-gray-400 capitalize' : 'hover:underline')]"
             >
-              {{ isInFavorites ? print('favorite') : print('add_to_favorites')}}
+              {{ isInFavorites ? print('favorite') : print('add_to_favorites') }}
             </span>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="flex flex-1 w-200 items-center text-black dark:text-white lg:pr-3 mt-10"
       :ref="(ref) => (chartElement = ref)"
+      class="flex flex-1 w-200 items-center text-black dark:text-white lg:pr-3 mt-10"
     >
       <template v-if="calculatedSparkline">
         <BaseCryptoChart
@@ -173,7 +187,7 @@ const orderedSparkLabels = computed(() => {
           :tooltip="true"
           :win="
             calculatedSparkline[0] <
-            calculatedSparkline[calculatedSparkline.length - 1]
+              calculatedSparkline[calculatedSparkline.length - 1]
           "
         />
       </template>

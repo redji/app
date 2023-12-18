@@ -2,26 +2,26 @@
 const props = defineProps<{
   index: string;
   default: string;
-  options: 
+  options:
     {
       label: string;
       value: string;
     }[]
-}>();
+}>()
 
 const emit = defineEmits<{
-  (e: "onChange", value: string): void;
-}>();
+  (e: 'onChange', value: string): void;
+}>()
 
 const onChange = (e: Event) => {
-  const dom = e.target as HTMLTextAreaElement;
-  const value = dom.value;
+  const dom = e.target as HTMLTextAreaElement
+  const value = dom.value
   try {
-    emit("onChange", value);
+    emit('onChange', value)
   } catch (e) {
-    console.warn(e);
+    console.warn(e)
   }
-};
+}
 </script>
 
 <template>

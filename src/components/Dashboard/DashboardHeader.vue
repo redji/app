@@ -1,35 +1,33 @@
 <script setup lang="ts">
-import { ref, computed, watch, inject } from "vue";
-import { useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
-import { IAppProvider, TLangs } from "@/providers/app";
-import { Flag } from '@/app.organizer';
+import { ref, computed, watch, inject } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { IAppProvider, TLangs } from '@/providers/app'
+import { Flag } from '@/app.organizer'
 import {
   ROUTE_CRYPTO_OVERVIEW,
-  ROUTE_CRYPTO_FAVORITES,
-} from "@/app.routes";
+  ROUTE_CRYPTO_FAVORITES
+} from '@/app.routes'
 
+const App = inject('App') as IAppProvider
 
-const App = inject("App") as IAppProvider;
-
-const router = useRouter();
-const { t: print, locale } = useI18n();
-const isMobileMenuOpen = ref(false);
-const currentRouteName = computed(() => router.currentRoute.value.name);
-const activeLanguage = computed(() => App.lang.value);
+const router = useRouter()
+const { t: print, locale } = useI18n()
+const isMobileMenuOpen = ref(false)
+const currentRouteName = computed(() => router.currentRoute.value.name)
 
 const setMobileMenuOpen = (value: boolean) => {
-  isMobileMenuOpen.value = value;
-};
+  isMobileMenuOpen.value = value
+}
 
 const changeLanguage = (value: TLangs) => {
-    locale.value = value;
-    App.setLanguage(value)
+  locale.value = value
+  App.setLanguage(value)
 }
 
 watch(currentRouteName, () => {
-  isMobileMenuOpen.value = false;
-});
+  isMobileMenuOpen.value = false
+})
 
 </script>
 
@@ -44,17 +42,16 @@ watch(currentRouteName, () => {
             src="https://www.iconpacks.net/icons/2/free-cryptocurrency-coin-icon-2422-thumb.png"
             class="mr-3 h-6 sm:h-9 dark:invert"
             alt="Cryptoleet logo"
-          />
+          >
           <span
             class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
-            >Cryptoleet</span
-          >
+          >Cryptoleet</span>
         </div>
         <div class="flex items-center xs:order-4 md:none">
           <button
-            @click="() => setMobileMenuOpen(!isMobileMenuOpen)"
             type="button"
             class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            @click="() => setMobileMenuOpen(!isMobileMenuOpen)"
           >
             <svg
               :class="{ hidden: isMobileMenuOpen }"
@@ -67,7 +64,7 @@ watch(currentRouteName, () => {
                 fill-rule="evenodd"
                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                 clip-rule="evenodd"
-              ></path>
+              />
             </svg>
             <svg
               :class="{ hidden: !isMobileMenuOpen }"
@@ -80,14 +77,14 @@ watch(currentRouteName, () => {
                 fill-rule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                 clip-rule="evenodd"
-              ></path>
+              />
             </svg>
           </button>
         </div>
         <div
+          id="mobile-menu-2"
           :class="{ hidden: !isMobileMenuOpen }"
           class="justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-          id="mobile-menu-2"
         >
           <ul
             class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
@@ -118,7 +115,7 @@ watch(currentRouteName, () => {
                   "
                   class="block py-2 pr-4 pl-3 border-b border-gray-100 hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700 capitalize"
                 >
-                {{ print('favorites') }}
+                  {{ print('favorites') }}
                 </span>
               </router-link>
             </li>
@@ -129,15 +126,15 @@ watch(currentRouteName, () => {
             :type="'fr'"
             class="flag"
             width="40px"
-            @click="() => changeLanguage('fr')"
             :is-active="App.lang.value === 'fr'"
+            @click="() => changeLanguage('fr')"
           />
           <Flag
             :type="'en'"
             class="flag"
             width="40px"
-            @click="() => changeLanguage('en')"
             :is-active="App.lang.value === 'en'"
+            @click="() => changeLanguage('en')"
           />
         </div>
         <div class="hidden lg:flex lg:order-3">
@@ -145,19 +142,18 @@ watch(currentRouteName, () => {
             <input
               type="checkbox"
               :checked="App.theme.value === 'light' ? true : false"
+              class="sr-only peer"
               @input="
                 () =>
                   App.setTheme(App.theme.value === 'light' ? 'dark' : 'light')
               "
-              class="sr-only peer"
-            />
+            >
             <div
               class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
-            ></div>
+            />
             <span
               class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 capitalize"
-              > {{ App.theme.value }} Mode</span
-            >
+            > {{ App.theme.value }} Mode</span>
           </label>
         </div>
       </div>

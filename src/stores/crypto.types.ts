@@ -1,11 +1,10 @@
-
 export type TCryptoDefaultStates= {
-  cryptoList: Map<string,TCryptoData>
+  cryptoList: Map<string, TCryptoData>
   currenciesList: string[]
   categoriesList: TCategoryData[]
   currencyActive: string
   categoryActive: string | null
-  cryptoFavorites: Map<string,TCryptoData>
+  cryptoFavorites: Map<string, TCryptoData>
 }
 export type TCryptoList = {
   [key: string]: TCryptoData

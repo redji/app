@@ -1,12 +1,12 @@
-export default function useCurrencySmbol(currencyActive: string) {
+export default function useCurrencySmbol (currencyActive: string) {
   switch (currencyActive) {
-    case "btc":
-      return "฿";
-    case "eur":
-      return "€";
-    case "usd":
-      return "$";
+    case 'btc':
+      return '฿'
+    case 'eur':
+      return '€'
+    case 'usd':
+      return '$'
     default:
-      return currencyActive;
+      return currencyActive
   }
 }

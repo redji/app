@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 type TSizeMode = 'small';
 
 const props = defineProps<{
   color?: string
   size?: TSizeMode
-}>();
+}>()
 
 const getClass = computed(() => {
   let c = ''
-  if (props.size === 'small') c += 'small d-inblock ' 
+  if (props.size === 'small') c += 'small d-inblock '
   else if (props.size) c += 'small d-inblock'
-  return c;
+  return c
 })
 
 const getClassContainer = computed(() => {
   let c = ''
-  if (props.size === 'small') c += 'min-loadc' 
-  else if (props.size) c += 'min-loadc' 
+  if (props.size === 'small') c += 'min-loadc'
+  else if (props.size) c += 'min-loadc'
   else { c += 'h-loadc' }
   return c
 })
@@ -31,34 +31,54 @@ const getColor = computed(() => {
 
 <template>
   <span :class="getClassContainer">
-    <div class="windows8" :class="getClass" :style="{'--color': getColor}" :data-color="getColor">
-      <div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div>
-      <div class="wBall" id="wBall_2"><div class="wInnerBall"></div></div>
-      <div class="wBall" id="wBall_3"><div class="wInnerBall"></div></div>
-      <div class="wBall" id="wBall_4"><div class="wInnerBall"></div></div>
-      <div class="wBall" id="wBall_5"><div class="wInnerBall"></div></div>
+    <div
+      class="windows8"
+      :class="getClass"
+      :style="{'--color': getColor}"
+      :data-color="getColor"
+    >
+      <div
+        id="wBall_1"
+        class="wBall"
+      ><div class="wInnerBall" /></div>
+      <div
+        id="wBall_2"
+        class="wBall"
+      ><div class="wInnerBall" /></div>
+      <div
+        id="wBall_3"
+        class="wBall"
+      ><div class="wInnerBall" /></div>
+      <div
+        id="wBall_4"
+        class="wBall"
+      ><div class="wInnerBall" /></div>
+      <div
+        id="wBall_5"
+        class="wBall"
+      ><div class="wInnerBall" /></div>
     </div>
   </span>
 </template>
 
 <style>
 .h-loadc {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .min-loadc {
-	position:relative;
+  position:relative;
 }
 
 .windows8:not(.small){position:relative;width:90px;height:90px;}
 
 .window8small {
-	display: inline-block;
-	width: 50px;height:40px;
+  display: inline-block;
+  width: 50px;height:40px;
 }
 
 .loader{margin-left:auto;margin-right:auto;margin-top:15%;}

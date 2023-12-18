@@ -6,10 +6,10 @@ type TProps = {
   isActive: boolean;
 };
 const props = withDefaults(defineProps<TProps>(), {
-  width: "30px",
+  width: '30px',
   isLoading: false,
-  isActive: true,
-});
+  isActive: true
+})
 
 const imageSource = new URL(`../assets/img/flags/${props.type}.png`, import.meta.url).href
 
@@ -25,7 +25,7 @@ const imageSource = new URL(`../assets/img/flags/${props.type}.png`, import.meta
       class="el-flags"
       :src="imageSource"
       style="width: 100%"
-    />
+    >
   </div>
 </template>
 
